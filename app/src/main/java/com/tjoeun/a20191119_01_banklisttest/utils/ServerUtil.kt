@@ -8,7 +8,7 @@ import java.io.IOException
 
 class ServerUtil {
 
-    interface JsonResponseHandler{
+    interface jsonResponseHandler{
         fun onResponse(json : JSONObject)
     }
 
@@ -16,11 +16,7 @@ class ServerUtil {
         //어느 서버에 접속할지 서버 주소를 저장하는 변수
         var BASE_URL = "http://192.168.0.26:5000"
 
-        interface JsonResponseHandler{
-            fun onResponse(json : JSONObject)
-        }
-
-        fun getRequestBankInfo(context: Context, handler: ServerUtil.JsonResponseHandler){
+        fun getRequestBankInfo(context: Context, handler: ServerUtil.jsonResponseHandler){
             var client = OkHttpClient()
             var urlBuilder = HttpUrl.parse("${BASE_URL}/info/bank")!!.newBuilder()
             //파라미터 첨부가 필요없다.
@@ -33,9 +29,11 @@ class ServerUtil {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    var body = response.body()!!.toString()
-                    val json = JSONObject(body)
-                    handler.onResponse(json)
+                    Log.d("로그 : onResponse","onResponse")
+                    var body = response.body()!!.string()
+                    Log.d("로그 : onResponse","${body}")
+                    var json = JSONObject(body)
+                    handler?.onResponse(json)
                 }
 
             })
