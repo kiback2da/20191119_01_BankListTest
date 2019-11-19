@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 import com.tjoeun.a20191119_01_banklisttest.R
 import com.tjoeun.a20191119_01_banklisttest.data.BankData
 
@@ -31,9 +32,7 @@ class BankListAdapter(context: Context, res:Int, list:ArrayList<BankData>) : Arr
         var img = row.findViewById<ImageView>(R.id.bankListImgMainImg)
 
         name.text = dataList.name
-        Log.d("로그 : URI","${dataList.logoUrl}")
-        img.setImageURI(dataList.logoUrl.toUri())
-
+        Glide.with(mContext).load(dataList.logoUrl).into(img)
 
         return row
     }
