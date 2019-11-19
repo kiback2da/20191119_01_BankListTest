@@ -28,6 +28,7 @@ class MainActivity : BaseActivity() {
 
     override fun setValues() {
         getBanksFromServer()
+
         bankAdapter = BankListAdapter(mContext,bankList)
         mainBankListView.adapter = bankAdapter
     }
@@ -46,6 +47,10 @@ class MainActivity : BaseActivity() {
                         val bankDetail = bankArray.getJSONObject(i)
                         val bankDetailData = BankData.getBankFromJsonObject(bankDetail)
                         bankList.add(bankDetailData)
+                    }
+
+                    runOnUiThread{
+                        bankAdapter?.notifyDataSetChanged()
                     }
 
                 }else{
